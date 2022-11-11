@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>meu primeiro canvas</title>
+    <link rel="stylesheet" type="text/css" href="style.css"/>
+   
+
+</head>
+<body> 
+    <center>
+    <h1> Meu primeiro Canvas </h1>
+    <canvas id="canvas" width="650px" height="600px"></canvas>
+    <br>
+
+    <input id="cor" type="text" placeholder="Digite a cor 🎨">
+    <input id="larguraLinha" type="number" placeholder="Digite a largura do pincel 🖌️🎨">
+    <button id="botaoLimpar" onclick="limpar()"> Limpar 🧹 </button>
+    <img src="inojin e sarada.png" width="" height="">
+   
+</center>
+
+    <script>
+        
+        canvas = document.getElementById("canvas");
+        ctx = canvas.getContext("2d");
+
+        var ultimoX, ultimoY;
+        cor = "black";
+        larguraLinha = 1;
+        //é aqui que cria a variável eventoToque
+
+        //é aqui que cria a variável que terá a largura e a altura do canvas
+
+        //é aqui que que muda a largura e altura do canvas se a tela for pequena
+        var Larguracanvas = screen.width - 70;
+        var Alturacanvas = screen.height - 300;
+        if(Larguracanvas<992 ){
+        canvas.width = Larguracanvas;
+        canvas.height = Alturacanvas;
+        document.body.style.overflow = "hidden" ;
+        }
+        //é aqui que programa o evento touchstart
+        canvas.addEventListener("touchstart",dedoTocou);
+        function dedoTocou (e){
+        cor = document.getElementById("cor").value;
+        larguraLinha = document.getElementById ("larguraLinha").value;
+        ultimoX = e.touches[0].clientX - canvas.offsetLeft;
+        ultimoY = e.touches[0].clientY - canvas.offsetTop;
+        }
+
+        //é aqui que programa o evento touchmove
+        canvas.addEventListener("touchmove",dedoMover)
+        function dedoMover (e){
+        atualX = e.touches[0].clientX - canvas.offsetLeft;
+        atualY = e.touches[0].clientY - canvas.offsetTop;
+
+        ctx.beginPath();
+        ctx.strokeStyle = cor;
+        ctx.lineWidth = larguraLinha;
+        ctx.moveTo(ultimoX, ultimoY);
+        ctx.lineTo(atualX, atualY);
+        ctx.stroke();
+        ultimoX = atualX;
+        ultimoY = atualY;
+        }
+
+        // fim do mesmo código utilizado para a versão web
+        function limpar(){
+            ctx.clearRect(0,0,canvas.width, canvas.height)
+        }
+
+    </script>
+</body>
+</html>
